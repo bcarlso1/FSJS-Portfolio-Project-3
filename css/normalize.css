@@ -1,0 +1,8 @@
+body, div, p, h1, h2, li, a, form, fieldset, input {
+    margin: 2px; 
+    padding: 2px;
+}
+
+h1, h2 {
+    font-size: 100%;
+}
