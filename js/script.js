@@ -51,10 +51,9 @@ shirtDiv.insertAdjacentElement("afterend", colorPlaceholder);
 // add option item "select a T-shirt theme" to the color field
 var selectOption = document.createElement("OPTION");
 selectOption.innerHTML = "Select color";
-selectOption.setAttribute('selected', "selected");
 tShirtColorSelect.prepend(selectOption);
 // hide new option so can't pick it in drop down
-selectOption.style.display = "none";
+ selectOption.style.display = "none";
 // hide all colors before theme picked
 tShirtColorSelect.style.display = "none";
 
@@ -62,24 +61,25 @@ tShirtColorSelect.style.display = "none";
 tShirtDesignSelect.addEventListener('input', (e) => {
     if (tShirtDesignSelect.value == "js puns" || tShirtDesignSelect.value == "heart js" ) {
         // show colors list, hide placeholder div
-        tShirtColorSelect.style.display = "block";
+        tShirtColorSelect.style.display = "block"; 
         colorPlaceholder.style.display = "none";
+        tShirtColorSelect.selectedIndex = "0";
     }
     if (tShirtDesignSelect.value == "js puns") {
-        colorList[1].style.display = "block";
-        colorList[2].style.display = "block";
-        colorList[3].style.display = "block";
+        colorList[1].style.display = "";
+        colorList[2].style.display = "";
+        colorList[3].style.display = "";
         colorList[4].style.display = "none";
         colorList[5].style.display = "none";
         colorList[6].style.display = "none";
     }
-    else if (tShirtDesignSelect.value == "heart js") {
+    else {
         colorList[1].style.display = "none";
         colorList[2].style.display = "none";
         colorList[3].style.display = "none";
-        colorList[4].style.display = "block";
-        colorList[5].style.display = "block";
-        colorList[6].style.display = "block";
+        colorList[4].style.display = "";
+        colorList[5].style.display = "";
+        colorList[6].style.display = "";
     }
 });
 
@@ -184,9 +184,9 @@ var zipInput = document.getElementById('zip');
 var CVVInput = document.getElementById('cvv');
 var cardInput = document.getElementById("cc-num");
 var emailTest;
-var zipTest;
-var CVVTest;
-var cardTest;
+var zipTest = false;
+var CVVTest = false;
+var cardTest = false;
 var nameTest = false;
 var activityTest = false;
 
@@ -210,7 +210,7 @@ activities.insertAdjacentElement("afterbegin", checkboxError);
 
  // validate name
  function checkName() {
-    const nameRegex = /^[a-z]+$/i;
+    const nameRegex = /^[a-z\s]+$/i;
     name = nameInput.value;
     nameTest = nameRegex.test(name); 
     // error response & undo
@@ -288,7 +288,10 @@ function checkCard() {
             } else {
             cardInput.style.border = "2px solid rgb(111, 157, 220)";
         }
-    }};
+    } else {
+        cardTest = true;
+    }
+};
 
 function checkZip() {
 if (paymentSelect.value == "credit card") {
@@ -301,7 +304,11 @@ if (paymentSelect.value == "credit card") {
         } else {
         zipInput.style.border = "2px solid rgb(111, 157, 220)";
     }
-}};
+}
+else {
+    zipTest = true;
+}
+};
 
 function checkCVV() {
     if (paymentSelect.value == "credit card") {
@@ -314,7 +321,10 @@ function checkCVV() {
             } else {
             CVVInput.style.border = "2px solid rgb(111, 157, 220)";
         }
-    }};
+    } else {
+        CVVTest = true;
+    }
+};
 
 
 
@@ -369,6 +379,7 @@ submit.addEventListener("click", (e) => {
     } else {
         // type is button so it won't submit
         submit.setAttribute('type', 'button');
+        console.log(zipTest);
         submitError.innerHTML = "Not even close.  See the errors in your ways above.";
         setTimeout(function() { submitError.innerHTML = "";}, 3000);
     }
